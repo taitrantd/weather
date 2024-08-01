@@ -8,6 +8,7 @@ import Main from './view/home/main'
 import PreviewForm from './view/home/PreviewForm'
 import Footer from './view/footer'
 import Info from'./view/info/info'
+import Shop from'./view/shop/shop'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -16,9 +17,9 @@ function App() {
     <Header /> 
     {/* <Banner />
     <Main />
-    <PreviewForm/> */}
-
-    <Info />
+    <PreviewForm/>    
+    <Info /> */}
+    <Shop />
     <Footer/>
 
 
