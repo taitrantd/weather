@@ -1,0 +1,35 @@
+.col p{
+    color: black;
+    margin-top: 10px;
+}
+.col h5{
+ 
+    margin-bottom: 0px;
+}
+.row.align-items-center-1{
+    background-color: #E0A12E;
+}
+.row.align-items-center.pro{
+    background-color: #E0A12E;
+}
+.banner-button-1-2-3 {
+    margin-top: 30px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #D2982D;
+    text-decoration: none;
+    border-radius: 5px;
+   
+  }
+
+  
+.banner-button-1-2-3:hover {
+    color: white;
+  }
+  .buttonn{
+     text-align: center;
+     margin-top:20px ;
+margin-bottom:50px ;
+  }
