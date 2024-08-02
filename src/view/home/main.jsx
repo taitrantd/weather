@@ -1,7 +1,9 @@
 import React from 'react';
+import Banner from './banner';
+import PreviewForm from './PreviewForm';
 const Main = () => {
     return <>
-
+<Banner />
 <div className="features">
 {/* <img src="../public/image/vector.png" alt="" /> */}
         <div className="feature">
@@ -59,8 +61,9 @@ const Main = () => {
           </ul>
         </div>
       </div>
-
+  <PreviewForm />
     </>
+  
 }
 
 export default Main

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 const Footer = () => {
     return <>
 
@@ -17,10 +18,10 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Pages</h3>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Infor</a></li>
-            <li><a href="#">Shop</a></li>
-            <li><a href="#">TOS</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/info">Infor</Link></li>
+            <li><Link to="/shop">Shop</Link></li>
+            <li><Link to="/tos">TOS</Link></li>
           </ul>
         </div>
         <div className="footer-column">
