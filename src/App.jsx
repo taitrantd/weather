@@ -8,19 +8,23 @@ import Footer from './view/footer'
 import Info from './view/info/info'
 import Shop from './view/shop/shop'
 import Tos from './view/tos/tos'
+import Capi from './view/weatherchart/CallApiWeather'
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/info" element={<Info />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/tos" element={<Tos />} />
-      </Routes>
-      <Footer />
-    </Router>
+<Capi />
+
+    // <Router>
+    //   <Header />
+    //   <Routes>
+    //     <Route path="/" element={<Main />} />
+    //     <Route path="/info" element={<Info />} />
+    //     <Route path="/shop" element={<Shop />} />
+    //     <Route path="/tos" element={<Tos />} />
+    //     <Route path="/capi" element={<Capi />} />
+    //   </Routes>
+    //   <Footer />
+    // </Router>
   )
 }
 

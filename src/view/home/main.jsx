@@ -8,7 +8,7 @@ const Main = () => {
 {/* <img src="../public/image/vector.png" alt="" /> */}
         <div className="feature">
             
-          <h2><i class="fa-solid fa-compass" style={{ color: '#ffffff' }}></i>{' '}Personalized</h2>
+          <h2><i className="fa-solid fa-compass" style={{ color: '#ffffff' }}></i>{' '}Personalized</h2>
         
            <p>
             A personalized weather report that shows the best time and place for

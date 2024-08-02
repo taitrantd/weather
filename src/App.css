@@ -23,32 +23,32 @@ body {
 
 @media (max-width: 600px) {
   .icon-wrapper {
-    width: 0.875rem; /* Giảm kích thước cho màn hình nhỏ hơn */
-    height: 0.875rem; /* Giảm kích thước cho màn hình nhỏ hơn */
-    margin-right: 0.2rem; /* Giảm khoảng cách cho màn hình nhỏ hơn */
+    width: 0.875rem; 
+    height: 0.875rem; 
+    margin-right: 0.2rem; 
   }
 
   .icon-wrapper i {
-    font-size: 0.5rem; /* Giảm kích thước biểu tượng cho màn hình nhỏ hơn */
+    font-size: 0.5rem; 
   }
 
   .weather-text {
-    font-size: 0.875rem; /* Giảm kích thước văn bản cho màn hình nhỏ hơn */
+    font-size: 0.875rem; 
   }
 }
 
 @media (min-width: 1200px) {
   .icon-wrapper {
-    width: 1.5rem; /* Tăng kích thước cho màn hình lớn hơn */
-    height: 1.5rem; /* Tăng kích thước cho màn hình lớn hơn */
-    margin-right: 0.5rem; /* Tăng khoảng cách cho màn hình lớn hơn */
+    width: 1.5rem; 
+    height: 1.5rem; 
+    margin-right: 0.5rem; 
   }
 
   .icon-wrapper i {
-    font-size: 1rem; /* Tăng kích thước biểu tượng cho màn hình lớn hơn */
+    font-size: 1rem; 
   }
 
   .weather-text {
-    font-size: 1.25rem; /* Tăng kích thước văn bản cho màn hình lớn hơn */
+    font-size: 1.25rem; 
   }
 }

@@ -1,9 +1,19 @@
 
 # chạy trang web : npm run dev
+yarn dev
 git add .
 git commit -m "Initial commit"
 git push -u origin main
 //
+
+
+
+//get api thoi tiet theo gio :   https://api.opensearch.vn/v1/weather/forecast/hourly?latitude=21.01223639868195&longitude=105.84763884544373
+
+//get api theo ngay: https://api.opensearch.vn/v1/weather/forecast/daily?latitude=21.01223639868195&longitude=105.84763884544373
+
+//get api vi tri https://geocoder.openmap.dev/v1/reverse?point.lat=19.530902&point.lon=104.284157&boundary.circle.radius=0.05&size=1
+
 chinh man hinh
 @media (max-width: 600px) {
   .icon-wrapper {
@@ -39,7 +49,7 @@ chinh man hinh
 
 //
 
-
+//trc khi goi route
 import './App.css'
 import Header from './view/header'
 import Banner from './view/home/banner'
@@ -69,3 +79,8 @@ function App() {
 }
 
 export default App
+
+//cac buoc goi router
+npm install react-router-dom
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+  <Link to="/">Home</Link>
