@@ -1,3 +1,17 @@
+.features-1{
+  text-align: center;
+
+  padding: 20px 20px;
+  padding-bottom:0 ;
+  padding-top:0 ;
+  color: white;
+  margin-bottom: 150px;
+
+}
+.features-1 h2{
+  font-size: 3em;
+
+}
 .banner-button-1-3 {
     display: inline-block;
     padding: 5px 40px;
@@ -11,7 +25,7 @@
   }
  
   .banner-button-1-3:hover {
-    background-color: #cc5200; 
+    color: black;
   }
   
   .banner-button-2-3 {
@@ -27,7 +41,7 @@
   }
   
   .banner-button-2-3:hover {
-    background-color: #cc5200; 
+color: white;
   }
   .banner-content p {
     width: 440px;
@@ -72,6 +86,11 @@ background-repeat: no-repeat;
     border-radius: 9px;
     margin-right: 10px;
   }
+  .banner-button-1-3-1:hover{
+    color: white;
+    border: 1px solid #F5B747;
+    background-color: #D2982D; /* Màu nền của nút */
+  }
   .textblack{
     color: black;
   }
@@ -80,3 +99,20 @@ background-repeat: no-repeat;
     height: 50px;
     font-size: 70px;
   }
+
+  
+  .card-header {
+ background-color: #E0A12E;
+  }
+  
+  .card-title {
+    color: #fff;  
+  }
+  
+  .btn-primary {
+    background-color: #ffb347;
+    border-color: #ffb347;
+  }
+.col-md-4{
+  
+}

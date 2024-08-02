@@ -16,10 +16,10 @@ function App() {
   return (
     <>
     <Header /> 
-    <Banner /> 
-    <Main />
-    <PreviewForm/>    
-    <Info />
+    {/* <Banner /> */}
+    {/* <Main />
+    <PreviewForm/>     */}
+    {/* <Info /> */}
     <Shop />
     <Tos />
     <Footer/>
