@@ -1,0 +1,68 @@
+
+.terms-container {
+  
+    background-color: #E0A12E; 
+    color: #000000; 
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 785px;
+    max-height: 550px; 
+    margin:  0 auto;
+    overflow-y: scroll; 
+    position: relative;
+  }
+  
+  
+  .terms-container::-webkit-scrollbar {
+    width: 4px; 
+    
+  }
+  .margintop{
+    margin-top: 100px;
+  }
+  .marginbot{
+    margin-bottom: 80px;
+  }
+  .terms-container::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  
+  .terms-container::-webkit-scrollbar-thumb {
+    background: #ffffff; 
+    border-radius: 2px; 
+    border: 1px solid rgba(0, 0, 0, 0.2); 
+    min-height: 10px;
+  }
+  
+  .terms-container::-webkit-scrollbar-thumb:hover {
+    background: #ccc; 
+  }
+  
+  h1, h2 {
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  
+  p {
+    font-size: 1em;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+  }
+  .icon-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .lock-icon {
+    width: 40px; /* Đặt chiều rộng hình ảnh */
+    height: auto; /* Đặt chiều cao tự động để duy trì tỷ lệ */
+  }
