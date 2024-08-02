@@ -1,9 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
-}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -110,6 +105,9 @@
   text-decoration: none;
   border-radius: 5px;
  
+}
+a.banner-button-1-2:hover{
+ color: white;
 }
 
 .banner-button-1:hover {
@@ -233,7 +231,7 @@ margin-top: 500px;
 
 .footer-column button {
   padding: 10px;
-  background-color: #ff6600;
+ 
   color: white;
   border: none;
   border-radius: 5px;
@@ -241,9 +239,7 @@ margin-top: 500px;
   font-size: 1em;
 }
 
-.footer-column button:hover {
-  background-color: #cc5200;
-}
+
 
 .footer-bottom {
   text-align: center;
@@ -278,7 +274,7 @@ margin-top: 500px;
 
 .features-1{
   text-align: center;
-  
+  margin-top: 100px;
   padding: 20px 20px;
   padding-bottom:0 ;
   padding-top:0 ;
@@ -305,6 +301,7 @@ margin-bottom: 50px;
 .cta img {
   max-height: 400px;
   margin-right: 20px;
+  margin-left: 0px;
 }
 
 .cta-text {
@@ -328,4 +325,47 @@ margin-bottom: 50px;
 .p-1{
 color:#FFC355 ;
 margin-bottom: 10px;
+}
+.form-control{
+  background-color:#E0A12E;
+ 
+}
+.btn1{
+  background-color:#E0A12E; 
+}
+.subscribe-form .form-control::placeholder {
+  color: white;
+}
+.chumo{
+  opacity: 0.5;
+}
+.weather-share {
+  display: flex;
+  align-items: center;
+  border-radius: 0.3125rem; /* 5px thành rem */
+
+ 
+  box-sizing: border-box; /* Bao gồm padding và border trong kích thước phần tử */
+}
+
+.icon-wrapper {
+  width: 1.125rem; /* 18px thành rem */
+  height: 1.125rem; /* 18px thành rem */
+  background-color: #4A4A4A;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.25rem; /* 4px thành rem */
+}
+
+.icon-wrapper i {
+  color: white;
+  font-size: 0.625rem; /* 10px thành rem */
+}
+
+.weather-text {
+  color: white;
+  font-size: 1rem; /* 16px thành rem */
+  flex: 1; /* Để văn bản chiếm hết không gian còn lại */
 }

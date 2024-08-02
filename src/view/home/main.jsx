@@ -31,7 +31,7 @@ const Main = () => {
           </p>
         </div>
       </div>
-      <div className="cta">
+      <div className="cta 1">
       <img src="../public/image/iphone12.png" alt="BannerImage" />
         <div className="cta-text">
           <h1>
@@ -42,16 +42,19 @@ const Main = () => {
           </h2>
           <ul>
             <li>
-              <i className="fa-solid fa-circle-check"></i> Share your weather
-              stories and photos.
+            <div className="weather-share">
+      <div className="icon-wrapper">
+        <i className="fa-solid fa-check"></i>
+      </div>
+      <span className="weather-text">Share your weather stories and photos.</span>
+    </div>
             </li>
             <li>
               <i className="fa-regular fa-circle-check"></i> Custom weather
               alerts and notifications.
             </li>
             <li>
-              <i className="fa-regular fa-circle-check"></i>
-              Smart weather integrations for your home.
+              <i className="fa-regular fa-circle-check"></i> Smart weather integrations for your home.
             </li>
           </ul>
         </div>

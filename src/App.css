@@ -3,6 +3,52 @@
   max-height: 3460px;
   margin: 0 auto;
   padding: 2rem;
+ 
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
 
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #e79c19;
 
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .icon-wrapper {
+    width: 0.875rem; /* Giảm kích thước cho màn hình nhỏ hơn */
+    height: 0.875rem; /* Giảm kích thước cho màn hình nhỏ hơn */
+    margin-right: 0.2rem; /* Giảm khoảng cách cho màn hình nhỏ hơn */
+  }
+
+  .icon-wrapper i {
+    font-size: 0.5rem; /* Giảm kích thước biểu tượng cho màn hình nhỏ hơn */
+  }
+
+  .weather-text {
+    font-size: 0.875rem; /* Giảm kích thước văn bản cho màn hình nhỏ hơn */
+  }
+}
+
+@media (min-width: 1200px) {
+  .icon-wrapper {
+    width: 1.5rem; /* Tăng kích thước cho màn hình lớn hơn */
+    height: 1.5rem; /* Tăng kích thước cho màn hình lớn hơn */
+    margin-right: 0.5rem; /* Tăng khoảng cách cho màn hình lớn hơn */
+  }
+
+  .icon-wrapper i {
+    font-size: 1rem; /* Tăng kích thước biểu tượng cho màn hình lớn hơn */
+  }
+
+  .weather-text {
+    font-size: 1.25rem; /* Tăng kích thước văn bản cho màn hình lớn hơn */
+  }
 }

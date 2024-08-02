@@ -40,18 +40,18 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-column">
-          <h3>Subscribe</h3>
-          <form action="#" method="post">
-    <div className="input-group mb-3">
-     
-     <div className="sendtele"> <input type="text"className="form-control" placeholder="Enter your email " aria-label="Recipient's username" aria-describedby="button-addon2"
-      />
-      <button className='buttontele'>
-      <i class="fa-brands fa-telegram"></i>
-      </button></div><p>Join our newsletter to stay up to date on features and releases</p>
+        <div className="subscribe-form" >
+      <h5>Subscribe</h5>
+      <div className="input-group">
+        <input type="email" className="form-control" placeholder="Enter your email" />
+        <div className="input-group-append">
+          <button className="btn1" type="button" >
+            <i className="fas fa-paper-plane"></i>
+          </button>
+        </div>
+        <p className='chumo'>Join our newsletter to stay up to date on features and releases</p>
+      </div>
     </div>
-
-          </form>
         </div>
       </div>
       <div className="footer-bottom">
