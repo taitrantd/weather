@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../weatherchart/chart.css';
+import '../weatherchart/chart.css'; // Đường dẫn đến file CSS
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
+
+const getWeatherIcon = (weatherCode) => {
+  switch (weatherCode) {
+    // Các mã thời tiết khác
+    default:
+      return '../image/weather/code-0.svg';
+  }
+};
 
 const CallApiWeatherHourly = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -13,6 +22,7 @@ const CallApiWeatherHourly = () => {
   const [longitude, setLongitude] = useState('105.84763884544373');
   const [location, setLocation] = useState("Hà Nội");
   const [nowTime, setNowTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+  const [currentWeather, setCurrentWeather] = useState(null);
 
   const fetchWeatherData = async (lat, lon) => {
     try {
@@ -21,9 +31,9 @@ const CallApiWeatherHourly = () => {
       const now = new Date();
       const hours = [];
 
-      // Lọc dữ liệu theo giờ bắt đầu từ bây giờ và 6 giờ tiếp theo mỗi 2 giờ
       for (let i = 0; i < 7; i++) {
         const targetTime = new Date(now.getTime() + i * 2 * 60 * 60 * 1000);
+        targetTime.setMinutes(0, 0, 0); // Làm tròn đến giờ gần nhất
         const formattedTime = targetTime.toISOString().substring(0, 13) + ':00';
         const dataPoint = data.values.find(v => v.time.startsWith(formattedTime));
         if (dataPoint) hours.push(dataPoint);
@@ -32,6 +42,7 @@ const CallApiWeatherHourly = () => {
       setWeatherData(hours);
       setLocation(`Vĩ độ: ${lat}, Kinh độ: ${lon}`);
       setNowTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      setCurrentWeather(data.current_weather); // Lưu dữ liệu current_weather
     } catch (err) {
       setError(err);
     }
@@ -52,76 +63,74 @@ const CallApiWeatherHourly = () => {
   if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
   if (!weatherData) return <div>Đang tải dữ liệu...</div>;
 
-  // Cập nhật dữ liệu cho biểu đồ
-  const labels = weatherData.map(hourly => new Date(hourly.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+  const labels = weatherData.map((hourly, index) => {
+    const now = new Date();
+    const targetTime = new Date(now.getTime() + index * 2 * 60 * 60 * 1000);
+    targetTime.setMinutes(0, 0, 0); // Làm tròn đến giờ gần nhất
+    return targetTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  });
+
   const temperatures = weatherData.map(hourly => hourly.temperature.temperature_2m);
 
   const data = {
     labels: labels,
     datasets: [{
-      label: 'Nhiệt độ theo giờ',
+      label: 'Nhiệt độ (°C)',
       data: temperatures,
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1,
-      pointRadius: 0 // Ẩn các điểm dữ liệu
+      borderColor: '#FFFFFF',
+      borderWidth: 2,
+      tension: 0.4,
+      pointRadius: 0
     }]
   };
 
   const options = {
-    plugins: {
-      legend: {
-        display: false // Ẩn thanh đổi (legend)
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => `Nhiệt độ: ${context.raw}°C` // Tùy chỉnh nội dung của tooltip
-        }
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 20
       }
     },
-    elements: {
-      point: {
-        radius: 0 // Ẩn các điểm dữ liệu
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.raw}°C`
+        }
+      },
+      datalabels: {
+        color: '#FFFFFF',
+        align: 'top',
       }
     },
     scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Giờ'
-        },
-        ticks: {
-          callback: (value) => value // Hiển thị giờ trên trục X
-        }
+      x: {display: false ,
+        grid: { display: false },
+        ticks: { color: '#FFFFFF' }
       },
       y: {
-        title: {
-          display: true,
-          text: 'Nhiệt độ (°C)'
-        }
+        display: false ,
+        grid: { display: false },
+        ticks: { color: '#FFFFFF' }
       }
     }
   };
 
   return (
     <div className='chart'>
-      <h1>Dự báo thời tiết theo giờ</h1>
-      <form onSubmit={handleSubmit} className="coordinate-form">
-        <label>
-          Vĩ độ:
-          <input type="text" value={latitude} onChange={handleLatitudeChange} />
-        </label>
-        <label>
-          Kinh độ:
-          <input type="text" value={longitude} onChange={handleLongitudeChange} />
-        </label>
-        <button type="submit">Xem thời tiết</button>
-      </form>
-      <Line data={data} options={options} />
-      <div className="chart-info">
-        <p><strong>Địa điểm:</strong> {location}</p>
-        <p><strong>Ngày:</strong> {new Date().toLocaleDateString()}</p>
-        <p><strong>Bây giờ là:</strong> {nowTime}</p>
+      <h1>Dự báo 24 giờ</h1>
+      <div className="line-chart">
+        <Line data={data} options={options} />
+      </div>
+      <div className="forecast-container">
+        {weatherData.map((hourly, index) => (
+          <div key={index} className="forecast-item">
+            <img className="forecast-icon" src={getWeatherIcon(hourly.weatherCode)} alt="Weather icon" />
+            <p className='temp1'>{hourly.wind.windspeed.windspeed_80m}Km/h </p>
+            <p className='temp1'>{labels[index]}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

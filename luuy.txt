@@ -6,7 +6,7 @@ git commit -m "Initial commit"
 git push -u origin main
 //
 
-
+npm install chartjs-plugin-datalabels
 
 //get api thoi tiet theo gio :   https://api.opensearch.vn/v1/weather/forecast/hourly?latitude=21.01223639868195&longitude=105.84763884544373
 
