@@ -17,7 +17,7 @@ const Main = () => {
           </p>
         </div>
         <div className="feature">
-          <h2><i class="fa-regular fa-image" style={{ color: '#ffffff' }}></i>{' '}Gallery</h2>
+          <h2><i className="fa-regular fa-image" style={{ color: '#ffffff' }}></i>{' '}Gallery</h2>
           <p>
             A cloud gallery that allows users to upload and share their photos
             and videos of the sky and the weather with other users and get
@@ -25,7 +25,7 @@ const Main = () => {
           </p>
         </div>
         <div className="feature">
-          <h2><i class="fa-solid fa-heart" style={{ color: '#ffffff' }}></i>{' '}Mood Tracker</h2>
+          <h2><i className="fa-solid fa-heart" style={{ color: '#ffffff' }}></i>{' '}Mood Tracker</h2>
           <p>
             A mood tracker that analyzes the user's mood based on the weather
             and suggests activities, music, or quotes to cheer them up or calm

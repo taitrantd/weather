@@ -6,7 +6,7 @@ const PreviewForm = () => {
     <>
    <div className="testimonials">
         
-  <div className='dieuhuong'><i class="fa-solid fa-chevron-left"></i></div> 
+  <div className='dieuhuong'><i className="fa-solid fa-chevron-left"></i></div> 
   <div className="testimonial">  
           <p>
             Juniper is a great app for checking the weather. It's easy to use
@@ -40,7 +40,7 @@ const PreviewForm = () => {
         </div>
 
      
-        <div className='dieuhuong'><i class="fa-solid fa-chevron-right"></i></div> 
+        <div className='dieuhuong'><i className="fa-solid fa-chevron-right"></i></div> 
       </div>
 
       <div className="features-1">
@@ -49,16 +49,16 @@ const PreviewForm = () => {
         <div className="faq1">
           <ul>
             <li>
-              <a href="#">How can I customize the Juniper app to suit my needs?<button className='chevron'><i class="fa-solid fa-chevron-right" ></i></button></a>
+              <a href="#">How can I customize the Juniper app to suit my needs?<button className='chevron'><i className="fa-solid fa-chevron-right" ></i></button></a>
             </li>
             <li>
-              <a href="#">How can I share my weather updates with my partner?<button className='chevron'><i class="fa-solid fa-chevron-right" ></i></button></a>
+              <a href="#">How can I share my weather updates with my partner?<button className='chevron'><i className="fa-solid fa-chevron-right" ></i></button></a>
             </li>
             <li>
-              <a href="#">How long is the free trial for the Juniper app?<button className='chevron'><i class="fa-solid fa-chevron-right" ></i></button></a>
+              <a href="#">How long is the free trial for the Juniper app?<button className='chevron'><i className="fa-solid fa-chevron-right" ></i></button></a>
             </li>
             <li>
-              <a href="#">What happens after the free trial ends?<button className='chevron'><i class="fa-solid fa-chevron-right" ></i></button></a>
+              <a href="#">What happens after the free trial ends?<button className='chevron'><i className="fa-solid fa-chevron-right" ></i></button></a>
             </li>
           </ul>
         </div>
@@ -69,7 +69,7 @@ const PreviewForm = () => {
         <h2>The Only Weather App You Need to Stay <br /> Connected with Nature and Each Other</h2>
        
       
-        <a href="#" class="banner-button-1-2">DOWNLOAD NOW</a>
+        <a href="#" className="banner-button-1-2">DOWNLOAD NOW</a>
       </div>
     </>
   );

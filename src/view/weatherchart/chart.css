@@ -1,39 +1,26 @@
 .chart {
     position: relative;
-    height: 400px; /* Chiều cao của biểu đồ */
-    width: 100%; /* Chiều rộng của biểu đồ */
+
   }
   
-  .line-chart {
-    height: 100%;
-    width: 100%;
-  }
+
   
 .forecast-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  max-width: 800px;
-  margin-top: 20px;
+
 }
 
 .forecast-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 0.8em;
+ 
   color: white;
 
 }
-
-.forecast-icon {
-  width: 25px;
-  height: 25px;
- 
+.tttt{
+  margin-bottom: 0;
 }
-.temp1 {
-  margin-bottom: 0px;
-    font-size: 1.3em;
-    margin-right: 20px;
-  }
