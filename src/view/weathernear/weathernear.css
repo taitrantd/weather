@@ -1,3 +1,17 @@
-.weathernear1{
+.current-weather-container{
+    margin-bottom: 100px;
+}
+.current-weather-iconpro{
+float: right;
+margin-top: 40px;
+margin-right: 100px;
 
+height: 150px;
+}
+.textpro1{
+      margin-top: 30px;  margin-left: 30px;
+}
+.pro1{
+padding: 25px;
+    width: 500px;
 }

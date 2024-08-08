@@ -25,11 +25,12 @@ function App() {
       <Route path="/tos" element={<Tos />} />
       <Route path="/capi" element={
           <>
+          <div className="boxx">
        <div className="nearhome">{<Near/>} </div>
        
             <div className="box"><Capi /> <Capidaily /></div> 
       
-         
+         </div>
           </>
         } />
       

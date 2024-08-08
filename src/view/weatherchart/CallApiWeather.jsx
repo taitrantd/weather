@@ -68,7 +68,7 @@ const CallApiWeatherHourly = () => {
       const now = dayjs();
       let currentTime = now.startOf('hour'); 
 
-      const hoursToFetch = 6; 
+      const hoursToFetch = 7; 
       const hours = [];
 
       for (let i = 0; i < hoursToFetch; i++) {
@@ -107,8 +107,8 @@ const CallApiWeatherHourly = () => {
 
   return (
     <div className='chart'>
-      <h1>Dự báo 12 giờ</h1>
-      <p>Thời gian hiện tại: {dayjs().format('HH:mm DD/MM/YYYY')}</p> {/* Hiển thị thời gian hiện tại */}
+      <h1 className='tieud1'>Dự báo 12 giờ</h1>
+  
       <div className="line-chart">
         <ChartContainer
           width={800}
@@ -136,11 +136,15 @@ const CallApiWeatherHourly = () => {
       <div className="forecast-container">
         {weatherData.map((hourly, index) => (
           <div key={index} className="forecast-item">
+            {index === 0 && (
+              <div className="current-forecast">
+                <div className="orange-bar"></div>
+              </div>
+            )}
             <img className="forecast-icon" src={getWeatherIcon(hourly.weatherCode)} alt="Biểu tượng thời tiết" />
-      
-            <p className='tttt'>{hourly.temperature.temperature_2m || 'N/A'}°C</p>
-            <p className='tttt'>{hourly.wind.windspeed.windspeed_80m || 'N/A'} km/h</p>
-            <p className='tttt'>{dayjs(hourly.time).format('HH:mm')}</p>
+            <p>{dayjs(hourly.time).format('HH:mm')}</p>
+            <p>{hourly.temperature.temperature_2m || 'N/A'}°C</p>
+            <p>{hourly.wind.windspeed.windspeed_80m || 'N/A'} km/h</p>
           </div>
         ))}
       </div>

@@ -1,26 +1,61 @@
 .chart {
-    position: relative;
+  display: flex;
+  flex-direction: column;
 
-  }
-  
+  color: white;
+  padding-left: 50px;
+}
+.td1{
+  float: left;
+}
+.line-chart {
+  margin: 20px 0;
+}
 
-  
 .forecast-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-
-
+  width: 100%;
+  position: relative;
 }
 
 .forecast-item {
   display: flex;
   flex-direction: column;
   align-items: center;
- 
-  color: white;
+  text-align: center;
+  position: relative;
+}
 
+.forecast-icon {
+  width: 50px;
+  height: 50px;
 }
-.tttt{
-  margin-bottom: 0;
+
+.current-forecast {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
+
+.orange-bar {
+  width: 2px;
+  height: 80px; /* Điều chỉnh chiều cao của thanh màu cam */
+  background-image: linear-gradient(
+    to bottom,
+    orange 20%,
+    transparent 20%,
+    transparent 40%,
+    orange 40%,
+    orange 60%,
+    transparent 60%,
+    transparent 80%,
+    orange 80%
+  );
+}
+/*   background-size:   5px; Kích thước của từng đoạn đứt */
+  /* position: absolute;
+  top: -60px; /* Điều chỉnh vị trí từ trên xuống của thanh màu cam */
+  /* left: 50%;
+  transform: translateX(700%); */ 

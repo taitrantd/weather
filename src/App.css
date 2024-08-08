@@ -51,4 +51,10 @@ body {
   .weather-text {
     font-size: 1.25rem; 
   }
+
+
 }
+  .boxx{
+    background-color: #333;
+    border-radius: 15px;
+  }

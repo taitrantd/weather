@@ -2,7 +2,7 @@ import '../weatherdaily/daily.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SunFilled } from '@ant-design/icons';
-
+import { ClockCircleOutlined } from '@ant-design/icons';
 const getWeatherIcon = (weatherCode) => {
   switch (weatherCode) {
     case 0:
@@ -127,7 +127,7 @@ const WeatherForecast = () => {
         </button>
       </div>
       <div className="current-time">
-        {time && <span>{time} GMT</span>}
+      { time && <span> <ClockCircleOutlined /> {time} GMT</span>}
       </div>
       <div className="conditions">
         <h2>Air Conditions</h2>

@@ -39,7 +39,7 @@ const Main = () => {
           <h1>
             Plan Your Outdoor <br /> Activities with Ease
           </h1>
-          <h2>
+          <h2 >
             Get notified before rain stops. <br /> Plan your outdoor activities
           </h2>
           <ul>

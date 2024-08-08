@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SunFilled } from '@ant-design/icons';
+import '../weathernear/weathernear.css'; // Đảm bảo đường dẫn này đúng
+import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
+// Cấu hình dayjs với các plugin
+dayjs.extend(weekday);
+dayjs.extend(localizedFormat);
 
 const getWeatherIcon = (weatherCode) => {
   switch (weatherCode) {
@@ -52,99 +58,86 @@ const getWeatherIcon = (weatherCode) => {
   }
 };
 
-const WeatherForecast = () => {
-  const [weatherData, setWeatherData] = useState(null);
-  const [loading, setLoading] = useState(true);
+// Hàm định dạng ngày giờ với tên tháng bằng tiếng Anh
+const formatDateWithDay = () => {
+  const now = dayjs();
+  const dayOfWeek = now.format('dddd'); // Lấy tên ngày trong tuần
+  const formattedDate = now.format('DD MMM  YYYY'); // MMM để lấy tên tháng bằng tiếng Anh
+  return `${dayOfWeek} | ${formattedDate}`;
+};
+
+const CallApiWeatherCurrent = () => {
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
+  const [latitude, setLatitude] = useState('21.01223639868195');
+  const [longitude, setLongitude] = useState('105.84763884544373');
+
+  // Hàm lấy dữ liệu thời tiết hiện tại
+  const fetchWeatherData = async (lat, lon) => {
+    try {
+      const response = await axios.get(`https://api.opensearch.vn/v1/weather/forecast/hourly?latitude=${lat}&longitude=${lon}`);
+      const data = response.data.data;
+
+      // Cập nhật dữ liệu thời tiết hiện tại
+      setCurrentWeather(data.current_weather);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  // Hàm lấy dữ liệu vị trí
+  const fetchLocationData = async (lat, lon) => {
+    try {
+      const response = await axios.get(`https://geocoder.openmap.dev/v1/reverse?point.lat=${lat}&point.lon=${lon}&boundary.circle.radius=100&size=12`);
+      const locationData = response.data.features;
+
+      if (locationData.length > 0) {
+        // Tìm đối tượng có khoảng cách nhỏ nhất
+        const nearestFeature = locationData.reduce((closest, feature) => {
+          return feature.properties.distance < closest.properties.distance ? feature : closest;
+        });
+
+        // Lấy giá trị của localadmin
+        const localAdmin = nearestFeature.properties.localadmin;
+        setLocation(localAdmin ? localAdmin : 'Không tìm thấy thông tin vị trí.');
+      } else {
+        setLocation('Không tìm thấy thông tin vị trí.');
+      }
+    } catch (err) {
+      setError(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.opensearch.vn/v1/weather/forecast/daily?latitude=21.01223639868195&longitude=105.84763884544373'
-        );
-        setWeatherData(response.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchWeatherData(latitude, longitude);
+    fetchLocationData(latitude, longitude);
+  }, [latitude, longitude]);
 
-    fetchWeatherData();
-  }, []);
+  const handleLatitudeChange = (e) => setLatitude(e.target.value);
+  const handleLongitudeChange = (e) => setLongitude(e.target.value);
 
-  if (loading) return <div>Đang tải dữ liệu...</div>;
-  if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
-  if (!weatherData) return <div>Không có dữ liệu</div>;
-
-  const todayWeather = weatherData.data.values[0];
-  const weatherIconSrc = getWeatherIcon(todayWeather.weatherCode);
-
-  return (
-    <div className="weather-container">
-      <div className="current-weather">
-   
-        <img src={weatherIconSrc} alt="Weather icon" />
-        <p>Nhiệt độ: {todayWeather.apparent_temperature_2m.min}°C</p>
-      </div>
-    </div>
-  );
-};
-
-const NearbyPlaces = () => {
-  const [places, setPlaces] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchPlaces = async () => {
-      try {
-        const response = await axios.get(
-          'https://geocoder.openmap.dev/v1/reverse', {
-            params: {
-              'point.lat': 21.0244716,
-              'point.lon': 105.8369039,
-              'boundary.circle.radius': 1,
-              size: 1
-            }
-          }
-        );
-        setPlaces(response.data.features);
-      } catch (err) {
-        setError(err);
-      }
-    };
-
-    fetchPlaces();
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchWeatherData(latitude, longitude);
+    fetchLocationData(latitude, longitude);
+  };
 
   if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
-  if (places.length === 0) return <div>Đang tải dữ liệu...</div>;
+  if (!currentWeather || !location) return <div>Đang tải dữ liệu...</div>;
 
   return (
-    <div>
-   
-      <ul>
-        {places.map((place, index) => (
-          <li key={index}>
-            <h3>{place.properties.name}</h3>
-            
-            {/* <p>{place.properties.label}</p> */}
-          </li>
-        ))}
-      </ul>
+    <div className='current-weather-container'>
+     
+    <img className="current-weather-iconpro" src={getWeatherIcon(currentWeather.weathercode)} alt="Biểu tượng thời tiết hiện tại" />
+    <div className='textpro1'>
+    <h1 className='pro1'>{location}</h1> 
+    <h1 className='pro1'>{currentWeather.temperature}°C</h1>
+    <h2 className='pro1' >{formatDateWithDay()}</h2>
+      </div> 
+  
     </div>
   );
 };
 
-const App = () => {
-  return (
-    <div>  
-      <NearbyPlaces />
-      <WeatherForecast />
-    
-    </div>
-  );
-};
-
-export default App;
+export default CallApiWeatherCurrent;
