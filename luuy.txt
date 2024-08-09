@@ -84,3 +84,394 @@ export default App
 npm install react-router-dom
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
   <Link to="/">Home</Link>
+
+
+
+
+
+
+
+
+
+  callapiweather
+
+  import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { ChartContainer } from '@mui/x-charts/ChartContainer';
+import { LinePlot, MarkPlot, lineElementClasses, markElementClasses } from '@mui/x-charts/LineChart';
+import '../weatherchart/chart.css'; // Đảm bảo đường dẫn này đúng
+import dayjs from 'dayjs';
+
+const getWeatherIcon = (weatherCode) => {
+  switch (weatherCode) {
+    case 0:
+      return '../image/weather/code-0.svg';
+    case 1:
+    case 2:
+    case 3:
+      return '../image/weather/code-1,2,3.svg';
+    case 45:
+    case 48:
+      return '../image/weather/code-45,48.svg';
+    case 51:
+    case 53:
+    case 55:
+      return '../image/weather/code-51,53,55.svg';
+    case 56:
+    case 57:
+      return '../image/weather/code-56,57.svg';
+    case 61:
+    case 63:
+      return '../image/weather/code-61,63.svg';
+    case 65:
+      return '../image/weather/code-65.svg';
+    case 66:
+    case 67:
+      return '../image/weather/code-66,67.svg';
+    case 71:
+    case 73:
+    case 75:
+      return '../image/weather/code-71,73,75.svg';
+    case 77:
+      return '../image/weather/code-77.svg';
+    case 80:
+    case 81:
+    case 82:
+      return '../image/weather/code-80,81,82.svg';
+    case 85:
+    case 86:
+      return '../image/weather/code-85,86.svg';
+    case 95:
+      return '../image/weather/code-95.svg';
+    case 96:
+    case 99:
+      return '../image/weather/code-96,99.svg';
+    default:
+      return '../image/weather/code-0.svg';
+  }
+};
+
+const CallApiWeatherHourly = () => {
+  const [weatherData, setWeatherData] = useState([]);
+  const [error, setError] = useState(null);
+  const [latitude, setLatitude] = useState('21.01223639868195');
+  const [longitude, setLongitude] = useState('105.84763884544373');
+
+  const fetchWeatherData = async (lat, lon) => {
+    try {
+      const response = await axios.get(`https://api.opensearch.vn/v1/weather/forecast/hourly?latitude=${lat}&longitude=${lon}`);
+      const data = response.data.data;
+
+      const now = dayjs();
+      let currentTime = now.startOf('hour'); 
+
+      const hoursToFetch = 7; 
+      const hours = [];
+
+      for (let i = 0; i < hoursToFetch; i++) {
+        const formattedTime = currentTime.format('YYYY-MM-DDTHH:00:00');
+        const dataPoint = data.values.find(v => dayjs(v.time).isSame(formattedTime, 'hour'));
+        if (dataPoint) hours.push(dataPoint);
+        currentTime = currentTime.add(2, 'hour');
+      }
+
+      setWeatherData(hours);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeatherData(latitude, longitude);
+  }, [latitude, longitude]);
+
+  const handleLatitudeChange = (e) => setLatitude(e.target.value);
+  const handleLongitudeChange = (e) => setLongitude(e.target.value);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchWeatherData(latitude, longitude);
+  };
+
+  if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
+  if (weatherData.length === 0) return <div>Đang tải dữ liệu...</div>;
+
+  const labels = weatherData.map(hourly => dayjs(hourly.time).format('HH:mm'));
+  const temperatures = weatherData.map(hourly => (hourly.temperature.temperature_2m || 0).toFixed(1));
+
+  return (
+    <div className='chart'>
+      <h1 className='tieud1'>Dự báo 12 giờ</h1>
+
+      <div className="line-chart">
+        <ChartContainer
+          width={800}
+          height={200}
+          series={[{ type: 'line', data: temperatures }]}
+          xAxis={[{ scaleType: 'point', data: labels }]}
+          yAxis={[{
+            label: 'Temperature (°C)', // Nhãn cho trục Y
+            tickFormat: value => `${value}°C`, // Định dạng giá trị trục Y
+          }]}
+          sx={{
+            [`& .${lineElementClasses.root}`]: {
+              stroke: '#FFFFFF',
+              strokeWidth: 2,
+            },
+            [`& .${markElementClasses.root}`]: {
+              stroke: '#FFFFFF',
+              scale: '0.6',
+              fill: '#fff',
+              strokeWidth: 2,
+            },
+          }}
+          disableAxisListener
+        >
+          <LinePlot />
+          <MarkPlot
+            data={temperatures.map((temp, index) => ({
+              x: labels[index],
+              y: temp,
+              label: `${temp}°C`
+            }))}
+            sx={{
+              [`& .${markElementClasses.root}`]: {
+                fill: '#fff',
+                stroke: '#fff',
+                strokeWidth: 2,
+                radius: 4,
+              },
+              [`& .${markElementClasses.label}`]: {
+                fill: '#fff',
+                fontSize: 12,
+                fontWeight: 'bold',
+                dy: -15, // Điều chỉnh vị trí của nhãn so với điểm
+              },
+            }}
+          />
+        </ChartContainer>
+      </div>
+      <div className="forecast-container">
+        {weatherData.map((hourly, index) => (
+          <div key={index} className="forecast-item">
+            {index === 0 && (
+              <div className="current-forecast">
+                <div className="orange-bar"></div>
+              </div>
+            )}
+            <img className="forecast-icon" src={getWeatherIcon(hourly.weatherCode)} alt="Biểu tượng thời tiết" />
+            <p>{dayjs(hourly.time).format('HH:mm')}</p>
+            <p>{hourly.temperature.temperature_2m || 'N/A'}°C</p> {/* Hiển thị nhiệt độ */}
+            <p>{hourly.wind.windspeed.windspeed_80m || 'N/A'} km/h</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CallApiWeatherHourly;
+
+
+
+
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Chart, LineElement, PointElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import plugin
+import '../weatherchart/chart.css'; // Đảm bảo đường dẫn này đúng
+import dayjs from 'dayjs';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+
+// Register the required chart components
+Chart.register(LineElement, PointElement, CategoryScale, LinearScale, Title, Tooltip, Legend, ChartDataLabels); // Register plugin
+
+const getWeatherIcon = (weatherCode) => {
+  switch (weatherCode) {
+    case 0:
+      return '../image/weather/code-0.svg';
+    case 1:
+    case 2:
+    case 3:
+      return '../image/weather/code-1,2,3.svg';
+    case 45:
+    case 48:
+      return '../image/weather/code-45,48.svg';
+    case 51:
+    case 53:
+    case 55:
+      return '../image/weather/code-51,53,55.svg';
+    case 56:
+    case 57:
+      return '../image/weather/code-56,57.svg';
+    case 61:
+    case 63:
+      return '../image/weather/code-61,63.svg';
+    case 65:
+      return '../image/weather/code-65.svg';
+    case 66:
+    case 67:
+      return '../image/weather/code-66,67.svg';
+    case 71:
+    case 73:
+    case 75:
+      return '../image/weather/code-71,73,75.svg';
+    case 77:
+      return '../image/weather/code-77.svg';
+    case 80:
+    case 81:
+    case 82:
+      return '../image/weather/code-80,81,82.svg';
+    case 85:
+    case 86:
+      return '../image/weather/code-85,86.svg';
+    case 95:
+      return '../image/weather/code-95.svg';
+    case 96:
+    case 99:
+      return '../image/weather/code-96,99.svg';
+    default:
+      return '../image/weather/code-0.svg';
+  }
+};
+
+const CallApiWeatherHourly = () => {
+  const [weatherData, setWeatherData] = useState([]);
+  const [error, setError] = useState(null);
+  const [latitude, setLatitude] = useState('21.01223639868195');
+  const [longitude, setLongitude] = useState('105.84763884544373');
+
+  const fetchWeatherData = async (lat, lon) => {
+    try {
+      const response = await axios.get(`https://api.opensearch.vn/v1/weather/forecast/hourly?latitude=${lat}&longitude=${lon}`);
+      const data = response.data.data;
+
+      const now = dayjs();
+      let currentTime = now.startOf('hour');
+
+      const hoursToFetch = 7;
+      const hours = [];
+
+      for (let i = 0; i < hoursToFetch; i++) {
+        const formattedTime = currentTime.format('YYYY-MM-DDTHH:00:00');
+        const dataPoint = data.values.find(v => dayjs(v.time).isSame(formattedTime, 'hour'));
+        if (dataPoint) hours.push(dataPoint);
+        currentTime = currentTime.add(2, 'hour');
+      }
+
+      setWeatherData(hours);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeatherData(latitude, longitude);
+  }, [latitude, longitude]);
+
+  const handleLatitudeChange = (e) => setLatitude(e.target.value);
+  const handleLongitudeChange = (e) => setLongitude(e.target.value);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchWeatherData(latitude, longitude);
+  };
+
+  if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
+  if (weatherData.length === 0) return <div>Đang tải dữ liệu...</div>;
+
+  const labels = weatherData.map(hourly => dayjs(hourly.time).valueOf());
+  const temperatures = weatherData.map(hourly => (hourly.temperature.temperature_2m || 0).toFixed(1));
+console.log(Math.min(...labels));
+console.log(Math.max(...labels));
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Temperature (°C)',
+        data: temperatures,
+        
+        fill: false,
+        backgroundColor: 'rgba(255, 255, 255, 0.2)', // Màu nền đường biểu đồ
+        borderColor: 'rgba(255, 255, 255, 1)', // Màu đường biểu đồ
+        borderWidth: 2, // Độ dày của đường biểu đồ
+        datalabels: {
+          display: true,
+          align: 'top',
+          color: 'white', // Màu chữ của nhãn
+          font: {
+            weight: 'bold',
+            size: 14 // Thay đổi kích thước chữ số tại đây
+          },
+        },
+      },
+    ],
+  };
+
+  const options = {
+    plugins: {
+      legend: {
+        display: false, // Ẩn chú giải
+      },
+      datalabels: {
+        display: false,
+        align: 'top',
+        color: 'white',
+        font: {
+          weight: 'bold',
+          size: 14 // Thay đổi kích thước chữ số tại đây
+        },
+      },
+    },
+    scales: {
+      x: {
+        scaleType:'time',
+        min: Math.min(labels) - (1000*60*100),
+        display: false, // Ẩn trục X 
+      },
+      y: {
+        display: false, // Hiển thị trục Y
+        min:  Math.min(...temperatures)-2,
+        max:  Math.max(...temperatures)+2,
+        ticks: {
+          callback: function(value) {
+            return value + '°C'; // Định dạng giá trị trục Y
+            
+          },
+        },
+        grid: {display: false, 
+          // Ẩn lưới trục Y nếu cần
+        },
+      },
+    },
+    maintainAspectRatio: false, // Cho phép thay đổi kích thước tự do
+  };
+  return (
+    <div className='chart'>
+      <h1 className='tieud1'>Dự báo 12 giờ</h1>
+      <br/><br/>
+      <div className="line-chart" style={{ width: '800px', height: '200px' }}> {/* Tùy chỉnh kích thước tại đây */}
+        <Line data={data} options={options} />
+      </div>
+      <div className="forecast-container">
+        {weatherData.map((hourly, index) => (
+          <div key={index} className="forecast-item">
+            {index === 0 && (
+              <div className="current-forecast">
+                <div className="orange-bar"></div>
+              </div>
+            )}
+            <img className="forecast-icon" src={getWeatherIcon(hourly.weatherCode)} alt="Biểu tượng thời tiết" />
+            <p>{dayjs(hourly.time).format('HH:mm')}</p>
+            <p>{hourly.temperature.temperature_2m || 'N/A'}°C</p> {/* Hiển thị nhiệt độ */}
+            <p>{hourly.wind.windspeed.windspeed_80m || 'N/A'} km/h</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CallApiWeatherHourly;

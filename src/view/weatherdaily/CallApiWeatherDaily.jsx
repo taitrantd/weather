@@ -91,7 +91,7 @@ const WeatherForecast = () => {
     setCurrentDayIndex((prevIndex) => (prevIndex - 1 + weatherData.data.values.length) % weatherData.data.values.length);
   };
 
-  if (loading) return <div>Đang tải dữ liệu...</div>;
+  if (loading) return <div>Đang tải dữ liệu...<br/> </div>;
   if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
   if (!weatherData) return <div>Không có dữ liệu</div>;
 
@@ -105,7 +105,7 @@ const WeatherForecast = () => {
 
   return (
     <div className="weather-container">
-      <div className="header">
+      <div className="header1">
         <button className="nav-button" onClick={handlePrevDay}>
           &lt;
         </button>
@@ -132,16 +132,16 @@ const WeatherForecast = () => {
       <div className="conditions">
         <h2>Air Conditions</h2>
         <div className="condition-item">
-          <span><i className="fa-solid fa-temperature-three-quarters"></i> Real Feel: {currentDay.apparent_temperature_2m.min}°C</span>
+          <span><i className="fa-solid fa-temperature-three-quarters"></i> Real Feel: <br />{currentDay.apparent_temperature_2m.min}°C</span>
         </div>
         <div className="condition-item">
-          <span><i class="fa-solid fa-wind"></i> Wind: {currentDay.wind.windspeed_10m_max} km/h</span>
+          <span><i class="fa-solid fa-wind"></i> Wind:<br /> {currentDay.wind.windspeed_10m_max} km/h</span>
         </div>
         <div className="condition-item">
-          <span><i class="fa-solid fa-droplet"></i> Chance of rain: {currentDay.rain.precipitationSum}%</span>
+          <span><i class="fa-solid fa-droplet"></i> Chance of rain: <br /> {currentDay.rain.precipitationSum}%</span>
         </div>
         <div className="condition-item">
-          <span><SunFilled /> UV Index: {currentDay.sun.uvIndexMax}</span>
+          <span><SunFilled /> UV Index: <br />{currentDay.sun.uvIndexMax}</span>
         </div>
       </div>
     </div>

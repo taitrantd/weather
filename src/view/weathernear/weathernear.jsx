@@ -124,7 +124,7 @@ const CallApiWeatherCurrent = () => {
   };
 
   if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
-  if (!currentWeather || !location) return <div>Đang tải dữ liệu...</div>;
+  if (!currentWeather || !location) return <div>Đang tải dữ liệu... <br/> </div>;
 
   return (
     <div className='current-weather-container'>

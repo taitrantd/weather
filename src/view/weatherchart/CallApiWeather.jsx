@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { ChartContainer } from '@mui/x-charts/ChartContainer';
-import { LinePlot, MarkPlot, lineElementClasses, markElementClasses } from '@mui/x-charts/LineChart';
-import '../weatherchart/chart.css'; // Đảm bảo đường dẫn này đúng
 import dayjs from 'dayjs';
+import { ClockCircleOutlined } from '@ant-design/icons';
+import '../weatherchart/chart.css';
 
 const getWeatherIcon = (weatherCode) => {
   switch (weatherCode) {
@@ -59,6 +58,7 @@ const CallApiWeatherHourly = () => {
   const [error, setError] = useState(null);
   const [latitude, setLatitude] = useState('21.01223639868195');
   const [longitude, setLongitude] = useState('105.84763884544373');
+  const canvasRef = useRef(null);
 
   const fetchWeatherData = async (lat, lon) => {
     try {
@@ -88,63 +88,86 @@ const CallApiWeatherHourly = () => {
     fetchWeatherData(latitude, longitude);
   }, [latitude, longitude]);
 
-  const handleLatitudeChange = (e) => setLatitude(e.target.value);
-  const handleLongitudeChange = (e) => setLongitude(e.target.value);
+  const drawChart = (ctx, width, height, temperatures) => {
+    const padding = 30;
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
+    const maxTemp = Math.max(...temperatures);
+    const minTemp = Math.min(...temperatures);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchWeatherData(latitude, longitude);
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    temperatures.forEach((temp, index) => {
+      const x = padding + (chartWidth / (temperatures.length - 1)) * index;
+      const y = height - padding - ((temp - minTemp) / (maxTemp - minTemp)) * chartHeight;
+      if (index === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    return { chartWidth, chartHeight, padding, maxTemp, minTemp };
   };
+
+  useEffect(() => {
+    if (weatherData.length === 0) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, width, height);
+
+    const temperatures = weatherData.map(hourly => (hourly.temperature.temperature_2m || 0).toFixed(1));
+
+    const chartProps = drawChart(ctx, width, height, temperatures);
+
+    // Draw the forecast container based on the chart
+    const forecastContainer = document.querySelector('.forecast-container');
+    const forecastItems = forecastContainer.children;
+
+    weatherData.forEach((hourly, index) => {
+      const x = chartProps.padding + (chartProps.chartWidth / (temperatures.length - 1)) * index;
+      const y = height - chartProps.padding - ((temperatures[index] - chartProps.minTemp) / (chartProps.maxTemp - chartProps.minTemp)) * chartProps.chartHeight;
+
+      // Ensure forecast item is within the canvas area
+      if (x < 0) x = 0;
+      if (x > width) x = width;
+      if (y < 0) y = 0;
+      if (y > height) y = height;
+
+      const forecastItem = forecastItems[index];
+      forecastItem.style.position = 'absolute';
+      forecastItem.style.left = `${x - forecastItem.offsetWidth / 2}px`; // Center the item horizontally
+      forecastItem.style.top = `${y + 30}px`; // Position below the chart
+
+      // Draw temperature above each point on the chart
+      ctx.fillStyle = '#FFFFFF'; // Màu chữ
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.font = '14px Arial';
+      ctx.fillText(`${temperatures[index]}°C`, x, y - 10);
+    });
+  }, [weatherData]);
 
   if (error) return <div>Đã xảy ra lỗi: {error.message}</div>;
   if (weatherData.length === 0) return <div>Đang tải dữ liệu...</div>;
 
-  const labels = weatherData.map(hourly => {
-    return dayjs(hourly.time).format('HH:mm');
-  });
-
-  const temperatures = weatherData.map(hourly => hourly.temperature.temperature_2m || 0);
-
   return (
-    <div className='chart'>
-      <h1 className='tieud1'>Dự báo 12 giờ</h1>
+    <div className='chart' style={{ position: 'relative', width: '900px', height: '350px' }}>
+      <h1 className='tieud1'><ClockCircleOutlined /> 24-hour forecast</h1>
+
+      <canvas ref={canvasRef} width={800} height={200} style={{ border: 'none', backgroundColor: 'transparent' }}></canvas>
   
-      <div className="line-chart">
-        <ChartContainer
-          width={800}
-          height={200}
-          series={[{ type: 'line', data: temperatures }]}
-          xAxis={[{ scaleType: 'point', data: labels }]}
-          sx={{
-            [`& .${lineElementClasses.root}`]: {
-              stroke: '#FFFFFF',
-              strokeWidth: 2,
-            },
-            [`& .${markElementClasses.root}`]: {
-              stroke: '#FFFFFF',
-              scale: '0.6',
-              fill: '#fff',
-              strokeWidth: 2,
-            },
-          }}
-          disableAxisListener
-        >
-          <LinePlot />
-          <MarkPlot />
-        </ChartContainer>
-      </div>
-      <div className="forecast-container">
+      <div className="forecast-container" style={{ position: 'relative', top: '-220px', width: '89%' }}>
         {weatherData.map((hourly, index) => (
           <div key={index} className="forecast-item">
-            {index === 0 && (
-              <div className="current-forecast">
-                <div className="orange-bar"></div>
-              </div>
-            )}
             <img className="forecast-icon" src={getWeatherIcon(hourly.weatherCode)} alt="Biểu tượng thời tiết" />
-            <p>{dayjs(hourly.time).format('HH:mm')}</p>
-            <p>{hourly.temperature.temperature_2m || 'N/A'}°C</p>
-            <p>{hourly.wind.windspeed.windspeed_80m || 'N/A'} km/h</p>
+       
+            <p className='hour1'>{hourly.wind.windspeed.windspeed_80m || 'N/A'}km/h</p>
+            <p className='hour1'>{index === 0 ? 'Now' : dayjs(hourly.time).format('HH:mm')}</p>
           </div>
         ))}
       </div>
