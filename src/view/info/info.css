@@ -33,3 +33,39 @@
      margin-top:20px ;
 margin-bottom:50px ;
   }
+  .card-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px 0; /* Khoảng cách trên dưới cho container */
+
+    background-size: cover; /* Tùy chỉnh kích thước của hình nền */
+    background-position: center; /* Căn giữa hình nền */
+    background-repeat: no-repeat; /* Không lặp lại hình nền */
+    border-radius: 50px; /* Tạo hiệu ứng bo tròn ở các cạnh */
+}
+
+.card123 {
+    background-image: url('../image/bgrmua.png'); /* Đường dẫn tới ảnh nền */
+    background-repeat: no-repeat;
+    border-radius: 20px; /* Tạo hiệu ứng bo tròn cho từng thẻ */
+    width: 200px; /* Chiều rộng của thẻ */
+    padding: 20px; /* Khoảng cách bên trong thẻ */
+    text-align: center; /* Canh giữa văn bản */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card img {
+    width: 60px; /* Kích thước của icon */
+    height: 60px; /* Kích thước của icon */
+    margin-bottom: 20px; /* Khoảng cách giữa icon và văn bản */
+}
+
+.card p {
+    font-size: 16px; /* Kích thước chữ */
+    color: #fff; /* Màu chữ */
+    margin-top: 0;
+}

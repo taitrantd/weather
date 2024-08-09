@@ -58,11 +58,61 @@ const getWeatherIcon = (weatherCode) => {
   }
 };
 
+// Hàm ánh xạ mã thời tiết thành mô tả trạng thái thời tiết
+const getWeatherDescription = (weatherCode) => {
+  switch (weatherCode) {
+    case 0:
+      return 'Clear sky';
+    case 1:
+    case 2:
+    case 3:
+      return 'Partly cloudy';
+    case 45:
+    case 48:
+      return 'Fog';
+    case 51:
+    case 53:
+    case 55:
+      return 'Light rain';
+    case 56:
+    case 57:
+      return 'Freezing rain';
+    case 61:
+    case 63:
+      return 'Showers';
+    case 65:
+      return 'Heavy showers';
+    case 66:
+    case 67:
+      return 'Snow showers';
+    case 71:
+    case 73:
+    case 75:
+      return 'Snowfall';
+    case 77:
+      return 'Snow grains';
+    case 80:
+    case 81:
+    case 82:
+      return 'Rain showers';
+    case 85:
+    case 86:
+      return 'Snow showers';
+    case 95:
+      return 'Thunderstorms';
+    case 96:
+    case 99:
+      return 'Severe thunderstorms';
+    default:
+      return 'Unknown weather';
+  }
+};
+
 // Hàm định dạng ngày giờ với tên tháng bằng tiếng Anh
 const formatDateWithDay = () => {
   const now = dayjs();
   const dayOfWeek = now.format('dddd'); // Lấy tên ngày trong tuần
-  const formattedDate = now.format('DD MMM  YYYY'); // MMM để lấy tên tháng bằng tiếng Anh
+  const formattedDate = now.format('DD MMM YYYY'); // MMM để lấy tên tháng bằng tiếng Anh
   return `${dayOfWeek} | ${formattedDate}`;
 };
 
@@ -128,14 +178,14 @@ const CallApiWeatherCurrent = () => {
 
   return (
     <div className='current-weather-container'>
-     
-    <img className="current-weather-iconpro" src={getWeatherIcon(currentWeather.weathercode)} alt="Biểu tượng thời tiết hiện tại" />
-    <div className='textpro1'>
-    <h1 className='pro1'>{location}</h1> 
-    <h1 className='pro1'>{currentWeather.temperature}°C</h1>
-    <h2 className='pro1' >{formatDateWithDay()}</h2>
-      </div> 
-  
+      <img className="current-weather-iconpro" src={getWeatherIcon(currentWeather.weathercode)} alt="Biểu tượng thời tiết hiện tại" />
+      <div className='textpro1'>
+        <h1 className='pro1'><i className="fa-solid fa-location-dot"> </i> {location}</h1> 
+        <h1 className='pro1'>{getWeatherDescription(currentWeather.weathercode)}</h1> {/* Thêm phần mô tả thời tiết */}
+<br />
+        <h1 className='pro13'>{currentWeather.temperature}°C</h1>
+        <h2 className='pro12'>{formatDateWithDay()}</h2>
+      </div>
     </div>
   );
 };

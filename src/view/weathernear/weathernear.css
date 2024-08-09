@@ -3,13 +3,29 @@
 float: right;
 margin-top: 40px;
 margin-right: 100px;
-
 height: 150px;
 }
 .textpro1{
-       margin-left: 30px;
+margin-left: 30px;
 }
 .pro1{
-padding: 20px;
-    width: 400px;
+padding-top: 15px;
+padding-left: 20px;
+padding-bottom: 10px;
+font-size: 2.5rem;
 }
+.pro12{
+    font-size: 1rem;
+    padding-left: 20px;
+    margin-top: 0px;
+}
+.pro13{
+    padding-left: 20px;
+    font-size: 4rem;
+    margin-bottom: 0px;
+}
+.weather-description {
+    font-size: 1.2rem;
+    color: #333; /* Màu chữ có thể thay đổi tùy ý */
+    margin-top: 10px;
+  }

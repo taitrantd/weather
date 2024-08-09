@@ -1,8 +1,8 @@
 import '../weatherdaily/daily.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { SunFilled } from '@ant-design/icons';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { SunFilled, ClockCircleOutlined } from '@ant-design/icons';
+
 const getWeatherIcon = (weatherCode) => {
   switch (weatherCode) {
     case 0:
@@ -53,6 +53,43 @@ const getWeatherIcon = (weatherCode) => {
 };
 
 
+const getBackgroundClass = (weatherCode) => {
+  switch (weatherCode) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return '../image/sunsie.jpg';
+      case 45:
+    case 48:
+    case 51:
+    case 53:
+    case 55:
+    case 56:
+    case 57:
+    case 61:
+    case 63:
+    case 65:
+    case 66:
+    case 67:
+    case 71:
+    case 73:
+    case 75:
+    case 77:
+    case 80: 
+    case 81: 
+    case 82: 
+    case 85:
+    case 86:
+    case 95:
+    case 96:
+    case 99:
+      return '../image/anhmua.jpg';
+    default:
+      return 'default';
+  }
+};
+
 const WeatherForecast = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,6 +109,7 @@ const WeatherForecast = () => {
       } finally {
         setLoading(false);
       }
+      
     };
 
     fetchWeatherData();
@@ -84,10 +122,21 @@ const WeatherForecast = () => {
   }, []);
 
   const handleNextDay = () => {
+    let url = getBackgroundClass(currentDay.weatherCode);
+    let boxElement = document.getElementsByClassName("boxx")[0];
+    boxElement.style.background = `url(${url}) no-repeat center center`;
+    boxElement.style.backgroundSize = 'cover';
+    
     setCurrentDayIndex((prevIndex) => (prevIndex + 1) % weatherData.data.values.length);
   };
 
   const handlePrevDay = () => {
+    let url = getBackgroundClass(currentDay.weatherCode);
+    let boxElement = document.getElementsByClassName("boxx")[0];
+    boxElement.style.background = `url(${url}) no-repeat center center`;
+    boxElement.style.backgroundSize = 'cover';
+    
+
     setCurrentDayIndex((prevIndex) => (prevIndex - 1 + weatherData.data.values.length) % weatherData.data.values.length);
   };
 
@@ -103,8 +152,16 @@ const WeatherForecast = () => {
   const isToday = new Date(currentDay.time).toDateString() === today.toDateString();
   const time = isToday ? currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
 
+  const backgroundClass = getBackgroundClass(currentDay.weatherCode);
+  let url = getBackgroundClass(currentDay.weatherCode);
+  let boxElement = document.getElementsByClassName("boxx")[0];
+  boxElement.style.background = `url(${url}) no-repeat center center`;
+  boxElement.style.backgroundSize = 'cover';
+  
   return (
-    <div className="weather-container">
+
+    <div className="weather-container" >
+  
       <div className="header1">
         <button className="nav-button" onClick={handlePrevDay}>
           &lt;
@@ -118,17 +175,20 @@ const WeatherForecast = () => {
               <div key={index} className={`day-icon ${isActive ? 'active' : ''}`}>
                 <p className="day">{date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}</p>
                 <img src={getWeatherIcon(day.weatherCode)} alt="Weather icon" />
+                <p>{day.weatherCode}</p>
               </div>
             );
           })}
         </div>
+      
         <button className="nav-button" onClick={handleNextDay}>
           &gt;
         </button>
       </div>
       <div className="current-time">
-      { time && <span> <ClockCircleOutlined /> {time} GMT</span>}
+        {time && <span> <ClockCircleOutlined /> {time} GMT</span>}
       </div>
+      
       <div className="conditions">
         <h2>Air Conditions</h2>
         <div className="condition-item">

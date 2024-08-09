@@ -21,14 +21,15 @@ function App() {
      <Route path="/shop" element={<Shop />} />
       <Route path="/tos" element={<Tos />} />
       <Route path="/capi" element={
-          <>
-          <div className="boxx">
+          <> <main>
+          <div className="proa" >
+          <div className="boxx" >
        <div className="nearhome">{<Near/>} </div>
        
             <div className="box"><Capi /> <Capidaily /></div> 
-      
-         </div>
-          </>
+      </div>
+         </div></main>
+         </>
         } />
       
      </Routes>

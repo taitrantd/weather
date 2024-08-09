@@ -3,6 +3,7 @@
   max-height: 3460px;
   margin: 0 auto;
   padding: 2rem;
+  
  
 }
 * {
@@ -55,10 +56,12 @@ body {
 
 }
   .boxx{
-    background-image: url('../image/stome1.webp');
+
+  
     background-size: cover; /* Đảm bảo hình nền bao phủ toàn bộ thẻ */
     background-position: center; /* Canh giữa hình nền */
     border-radius: 40px;
-   height: 920px;
 
+  background-repeat: no-repeat;
   }
+
