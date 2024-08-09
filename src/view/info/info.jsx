@@ -12,8 +12,8 @@ const info = () => {
     <img src="../public/image/vectorif.png" alt="" /></div>
   
     <div className="container text-center">
-  <div class="row align-items-center">
-    <div class="col">
+  <div className="row align-items-center">
+    <div className="col">
     
     </div>
     <div className="col">

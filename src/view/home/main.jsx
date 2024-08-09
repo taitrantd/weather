@@ -5,7 +5,6 @@ const Main = () => {
     return <>
 <Banner />
 <div className="features">
-{/* <img src="../public/image/vector.png" alt="" /> */}
         <div className="feature">
             
           <h2><i className="fa-solid fa-compass" style={{ color: '#ffffff' }}></i>{' '}Personalized</h2>

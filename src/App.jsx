@@ -1,10 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css'
-
 import Header from './view/header'
-import Banner from './view/home/banner'
 import Main from './view/home/main'
-import PreviewForm from './view/home/PreviewForm'
 import Footer from './view/footer'
 import Info from './view/info/info'
 import Shop from './view/shop/shop'

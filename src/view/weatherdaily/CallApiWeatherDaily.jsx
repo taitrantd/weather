@@ -135,10 +135,10 @@ const WeatherForecast = () => {
           <span><i className="fa-solid fa-temperature-three-quarters"></i> Real Feel: <br />{currentDay.apparent_temperature_2m.min}°C</span>
         </div>
         <div className="condition-item">
-          <span><i class="fa-solid fa-wind"></i> Wind:<br /> {currentDay.wind.windspeed_10m_max} km/h</span>
+          <span><i className="fa-solid fa-wind"></i> Wind:<br /> {currentDay.wind.windspeed_10m_max} km/h</span>
         </div>
         <div className="condition-item">
-          <span><i class="fa-solid fa-droplet"></i> Chance of rain: <br /> {currentDay.rain.precipitationSum}%</span>
+          <span><i className="fa-solid fa-droplet"></i> Chance of rain: <br /> {currentDay.rain.precipitationSum}%</span>
         </div>
         <div className="condition-item">
           <span><SunFilled /> UV Index: <br />{currentDay.sun.uvIndexMax}</span>
